@@ -1,10 +1,16 @@
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import styled from "styled-components";
-import { UserContext } from "../../../providers/UserProvider";
+import { useRecoilValue } from "recoil";
 
-export const UserIconWithName = (props) => {
+import { UserContext } from "../../../providers/UserProvider";
+import { userState } from "../../../store/userState";
+
+export const UserIconWithName = memo((props) => {
+  console.log("UserIconWithName");
+
   const { image, name } = props;
-  const { userInfo } = useContext(UserContext);
+  //const { userInfo } = useContext(UserContext);
+  const userInfo = useRecoilValue(userState);
   const isAdmin = userInfo ? userInfo.isAdmin : false;
 
   return (
@@ -14,7 +20,7 @@ export const UserIconWithName = (props) => {
       {isAdmin && <SEdit>編集</SEdit>}
     </Scontainer>
   );
-};
+});
 
 const Scontainer = styled.div`
   text-align: center;
